@@ -31,14 +31,14 @@ bg_speed = 3
 
 
 def create_enemy():
-  enemy = pygame.image.load('./images/enemy.png').convert_alpha()
-  enemy_rect = pygame.Rect(width, random.randint(0, heigth), *enemy.get_size())
+  enemy = pygame.transform.scale(pygame.image.load('./images/enemy.png').convert_alpha(), (150, 50))
+  enemy_rect = pygame.Rect(width, random.randint(0, heigth - enemy.get_height()), *enemy.get_size())
   enemy_speed = random.randint(2, 5)
   return [enemy, enemy_rect, enemy_speed]
 
 def create_bonus():
-  bonus = pygame.image.load('./images/bonus.png').convert_alpha()
-  bonus_rect = pygame.Rect( random.randint(0, width), 0, *bonus.get_size())
+  bonus = pygame.transform.scale(pygame.image.load('./images/bonus.png').convert_alpha(), (100, 150))
+  bonus_rect = pygame.Rect(random.randint(0, width - bonus.get_width()), 0, *bonus.get_size())
   bonus_speed = random.randint(4, 6)
   return [bonus, bonus_rect, bonus_speed]
 
@@ -56,7 +56,6 @@ enemies = []
 bonuses = []
 
 scores = 0
-
 img_index = 0
 
 is_working = True
@@ -95,7 +94,7 @@ while is_working:
   main_surface.blit(bg, (bgX, 0))
   main_surface.blit(bg, (bgX2, 0))
   main_surface.blit(player, player_rect)
-  main_surface.blit(font.render(str(scores), True, BLACK), (width - 30, 0))
+  main_surface.blit(font.render(str(scores), True, RED), (width - 30, 0))
 
 
   for enemy in enemies:
@@ -118,6 +117,7 @@ while is_working:
     if player_rect.colliderect(bonus[1]):
       bonuses.pop(bonuses.index(bonus))
       scores += 1
+
 
 
   if pressed_keys[K_DOWN] and not player_rect.bottom >= heigth:
