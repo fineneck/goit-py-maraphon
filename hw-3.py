@@ -70,9 +70,15 @@ while is_working:
 
   bgX -= bg_speed
   bgX2 -= bg_speed
-  
 
-  main_surface.blit(bg, (0, 0))
+  if bgX < -bg.get_width():
+    bgX = bg.get_width()
+
+  if bgX2 < -bg.get_width():
+    bgX2 = bg.get_width()
+
+  main_surface.blit(bg, (bgX, 0))
+  main_surface.blit(bg, (bgX2, 0))
   main_surface.blit(player, player_rect)
   main_surface.blit(font.render(str(scores), True, BLACK), (width - 30, 0))
 
